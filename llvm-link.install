@@ -1,0 +1,21 @@
+post_install() {
+  # some libraries in the debian packages are linked against the libLLVM-15.so.1
+  if [[ ! -f /usr/lib/libLLVM-15.so.1 ]]; then
+          ln -s /usr/lib/libLLVM-15.so /usr/lib/libLLVM-15.so.1
+  fi
+}
+
+post_upgrade() {
+  # some libraries in the debian packages are linked against the libLLVM-15.so.1
+  if [[ ! -f /usr/lib/libLLVM-15.so.1 ]]; then
+          ln -s /usr/lib/libLLVM-15.so /usr/lib/libLLVM-15.so.1
+  fi
+}
+
+post_remove() {
+  # remove created symbolic link to libLLVM-15.so
+  if [[ -f /usr/lib/libLLVM-15.so.1 ]]; then
+          rm -f  /usr/lib/libLLVM-15.so.1
+  fi
+
+}
