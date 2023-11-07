@@ -3,7 +3,7 @@
 pkgname=mesa-nw-vf2
 pkgdesc="an open-source implementation of the OpenGL specification, PowerVR (VisionFive2) version, nightwulf experimental version"
 pkgver=22.3.5
-pkgrel=2
+pkgrel=3
 arch=('riscv64')
 makedepends=('git' 'python-mako' 'xorgproto'
               'libxml2' 'libx11'  'libvdpau' 'libva' 'elfutils' 'libxrandr'
@@ -22,10 +22,11 @@ sha256sums=('8f2321dc9786c133826977397fd9c941296fd2044c04f50f3c1fc7fe65e30a3b')
 
 package () {
     mkdir -p "${pkgdir}/usr"
-    cp -a "${srcdir}/usr/bin" "${pkgdir}/usr"
     cp -a "${srcdir}/usr/include" "${pkgdir}/usr"
     cp -a "${srcdir}/usr/share" "${pkgdir}/usr"
     mkdir -p "${pkgdir}/usr/lib"
     cp -a "${srcdir}/usr/lib/riscv64-linux-gnu/"* "${pkgdir}/usr/lib/"
+    # fix paths
+    sed -i "s|/usr/lib/riscv64-linux-gnu/libvulkan_radeon.so|/usr/lib/libvulkan_radeon.so|g" "${pkgdir}/usr/share/vulkan/icd.d/radeon_icd.riscv64.json"
 }
 
